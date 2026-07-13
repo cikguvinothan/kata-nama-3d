@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Kata Nama 3D - SMK BUD2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',Arial;background:#0f172a;overflow:hidden;color:#fff}
+.stage{width:100vw;height:100vh;position:relative;perspective:1000px;background:radial-gradient(circle at center,#1e3a8a 0%,#0f172a 80%)}
+.scene{width:100%;height:100%;position:absolute;opacity:0;transition:opacity 1s;transform-style:preserve-3d}
+.scene.active{opacity:1}
+.obj-3d{position:absolute;font-size:8rem;transform-style:preserve-3d;animation:float3d 3s ease-in-out infinite}
+@keyframes float3d{0%,100%{transform:translateY(0) rotateY(0deg) rotateX(10deg)}50%{transform:translateY(-30px) rotateY(180deg) rotateX(10deg)}}
+.text-3d{position:absolute;font-size:4rem;font-weight:900;text-shadow:0 10px 30px rgba(0,0,0,0.5);transform:translateZ(50px);animation:popIn 0.8s ease-out}
+@keyframes popIn{0%{transform:translateZ(-200px) scale(0);opacity:0}100%{transform:translateZ(50px) scale(1);opacity:1}}
+.sub-title{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);font-size:1.8rem;background:rgba(0,0,0,0.7);padding:15px 40px;border-radius:50px;border:3px solid #FFD700}
+.timer-bar{position:absolute;top:0;left:0;height:8px;background:linear-gradient(90deg,#28a745,#FFD700);width:0%;transition:width 1s linear}
+.kredit{position:absolute;bottom:20px;right:20px;font-size:0.8rem;opacity:0.7}
+.btn-start{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:30px 60px;font-size:2rem;border:none;border-radius:50px;background:linear-gradient(45deg,#28a745,#20c997);color:#fff;cursor:pointer;font-weight:900;box-shadow:0 20px 50px rgba(40,167,69,0.6);z-index:999}
+.btn-start:hover{transform:translate(-50%,-50%) scale(1.1)}
+.bola{animation:spinBall 2s linear infinite}
+@keyframes spinBall{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.salah{animation:shake 0.5s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-20px)}75%{transform:translateX(20px)}}
+.betul{animation:zoomIn 0.5s}
+@keyframes zoomIn{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="timer-bar" id="timer"></div>
+  <button class="btn-start" id="startBtn" onclick="mula()">▶️ MULA BELAJAR</button>
+
+  <!-- Scene 1: Intro 0-10s -->
+  <div class="scene" id="s1">
+    <div class="obj-3d bola" style="top:20%;left:50%;transform:translateX(-50%)">⚽</div>
+    <div class="text-3d" style="top:50%;left:50%;transform:translate(-50%,-50%) translateZ(50px)">JOM KENAL<br>KATA NAMA!</div>
+    <div class="sub-title">Saya Cikgu Nama!</div>
+  </div>
+
+  <!-- Scene 2: 3 Jenis 10-25s -->
+  <div class="scene" id="s2">
+    <div class="obj-3d" style="top:15%;left:15%">👨‍🏫</div>
+    <div class="obj-3d" style="top:15%;left:50%;transform:translateX(-50%)">🏫</div>
+    <div class="obj-3d" style="top:15%;right:15%">📚</div>
+    <div class="text-3d" style="top:60%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:3rem">
+      <span style="color:#FFD700">ORANG</span> |
+      <span style="color:#20c997">TEMPAT</span> |
+      <span style="color:#007bff">BENDA</span>
+    </div>
+    <div class="sub-title">Kata Nama = Nama orang, tempat, benda</div>
+  </div>
+
+  <!-- Scene 3: Kuiz 25-40s -->
+  <div class="scene" id="s3">
+    <div class="text-3d" style="top:20%;left:50%;transform:translateX(-50%) translateZ(50px);font-size:2.5rem">Yang mana Kata Nama?</div>
+    <div class="obj-3d betul" id="o1" style="top:50%;left:20%;font-size:6rem">👦<br><span style="font-size:1.5rem">BUDAK</span></div>
+    <div class="obj-3d salah" id="o2" style="top:50%;left:50%;transform:translateX(-50%);font-size:6rem">🏃<br><span style="font-size:1.5rem">BERLARI</span></div>
+    <div class="obj-3d salah" id="o3" style="top:50%;right:20%;font-size:6rem">✨<br><span style="font-size:1.5rem">CANTIK</span></div>
+    <div class="sub-title">Jawapan: BUDAK ✅</div>
+  </div>
+
+  <!-- Scene 4: Ejaan 40-55s -->
+  <div class="scene" id="s4">
+    <div class="text-3d" style="top:30%;left:50%;transform:translateX(-50%) translateZ(50px);font-size:2.5rem">EJAAN BETUL</div>
+    <div class="text-3d" style="top:50%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:3rem">
+      <span style="color:#dc2626;text-decoration:line-through">KERTAPI</span> →
+      <span style="color:#28a745">KERETA API</span>
+    </div>
+    <div class="text-3d" style="top:70%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:3rem">
+      <span style="color:#dc2626;text-decoration:line-through">HAIRMAU</span> →
+      <span style="color:#28a745">HARIMAU</span>
+    </div>
+  </div>
+
+  <!-- Scene 5: Outro 55-60s -->
+  <div class="scene" id="s5">
+    <div class="obj-3d" style="top:50%;left:50%;transform:translate(-50%,-50%);font-size:12rem">🏆</div>
+    <div class="text-3d" style="top:20%;left:50%;transform:translateX(-50%) translateZ(50px)">GOOAL!</div>
+    <div class="sub-title">Kamu dah tahu Kata Nama! Syabas!</div>
+  </div>
+
+  <div class="kredit">Vinothan S.Ramayah - SMK BUD2</div>
+</div>
+
+<script>
+let scene = 0;
+const scenes = ['s1','s2','s3','s4','s5'];
+const durasi = [10000,15000,15000,15000,5000]; // ms setiap scene = 60s total
+const teks = [
+  "Hello murid! Saya Cikgu Nama. Hari ini kita jaring gol Kata Nama!",
+  "Kata Nama ada tiga. Orang seperti cikgu. Tempat seperti sekolah. Benda seperti buku.",
+  "Cuba teka. Yang mana Kata Nama? Budak, berlari, atau cantik? Jawapannya budak!",
+  "Ingat ejaan betul ya. Kereta Api, bukan kertapi. Harimau, bukan hairmau.",
+  "Gooal! Tahniah, kamu dah faham Kata Nama! Jumpa lagi!"
+];
+
+function cakap(teks){
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    let u = new SpeechSynthesisUtterance(teks);
+    u.lang = 'ms-MY';
+    u.rate = 0.9;
+    u.pitch = 1.1;
+    speechSynthesis.speak(u);
+  }
+}
+
+function mula(){
+  document.getElementById('startBtn').style.display='none';
+  nextScene();
+}
+
+function nextScene(){
+  if(scene > 0) document.getElementById(scenes[scene-1]).classList.remove('active');
+  if(scene >= scenes.length){
+    document.getElementById('startBtn').style.display='block';
+    document.getElementById('startBtn').innerText='🔄 MAIN SEMULA';
+    scene = 0;
+    return;
+  }
+
+  document.getElementById(scenes[scene]).classList.add('active');
+  cakap(teks[scene]);
+
+  // Update timer bar
+  let progress = ((scene+1)/scenes.length)*100;
+  document.getElementById('timer').style.width = progress+'%';
+
+  // Scene 3 animasi khas
+  if(scene==2){
+    setTimeout(()=>{document.getElementById('o1').classList.add('betul')},3000);
+    setTimeout(()=>{document.getElementById('o2').classList.add('salah')},4000);
+    setTimeout(()=>{document.getElementById('o3').classList.add('salah')},5000);
+  }
+
+  setTimeout(()=>{scene++;nextScene()}, durasi[scene]);
+}
+</script>
+</body>
+</html>
