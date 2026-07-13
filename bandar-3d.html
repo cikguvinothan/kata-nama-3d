@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Jom Lawat Bandar - SMK BUD2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',Arial;background:#0a1929;overflow:hidden;color:#fff}
+.stage{width:100vw;height:100vh;position:relative;perspective:1000px;background:linear-gradient(to top,#1e3a8a 0%,#0a1929 100%)}
+.scene{width:100%;height:100%;position:absolute;opacity:0;transition:opacity 1s;transform-style:preserve-3d}
+.scene.active{opacity:1}
+.obj-3d{position:absolute;font-size:6.5rem;transform-style:preserve-3d;animation:float3d 4s ease-in-out infinite;filter:drop-shadow(0 20px 30px rgba(0,0,0,0.6))}
+@keyframes float3d{0%,100%{transform:translateY(0) rotateY(0deg) scale(1)}50%{transform:translateY(-25px) rotateY(10deg) scale(1.05)}}
+.text-3d{position:absolute;font-size:3rem;font-weight:900;text-shadow:0 10px 30px rgba(0,0,0,0.8);transform:translateZ(50px);animation:popIn 0.8s ease-out;text-align:center}
+@keyframes popIn{0%{transform:translateZ(-200px) scale(0);opacity:0}100%{transform:translateZ(50px) scale(1);opacity:1}}
+.sub-title{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);font-size:1.4rem;background:rgba(0,0,0,0.8);padding:12px 35px;border-radius:50px;border:3px solid #3b82f6;text-align:center}
+.timer-bar{position:absolute;top:0;left:0;height:8px;background:linear-gradient(90deg,#3b82f6,#FFD700);width:0%;transition:width 1s linear}
+.kredit{position:absolute;bottom:20px;right:20px;font-size:0.8rem;opacity:0.7}
+.btn-start{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:30px 60px;font-size:2rem;border:none;border-radius:50px;background:linear-gradient(45deg,#3b82f6,#1d4ed8);color:#fff;cursor:pointer;font-weight:900;box-shadow:0 20px 50px rgba(59,130,246,0.6);z-index:999}
+.btn-start:hover{transform:translate(-50%,-50%) scale(1.1)}
+.kelip{animation:kelip 1.5s infinite}
+@keyframes kelip{0%,100%{opacity:1}50%{opacity:0.4}}
+.gerak{animation:gerakKanan 5s linear infinite}
+@keyframes gerakKanan{0%{transform:translateX(-100px)}100%{transform:translateX(100vw)}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="timer-bar" id="timer"></div>
+  <button class="btn-start" id="startBtn" onclick="mula()">🏙️ MASUK BANDAR</button>
+
+  <!-- Scene 1: Intro 0-8s -->
+  <div class="scene" id="s1">
+    <div class="obj-3d" style="top:20%;left:50%;transform:translateX(-50%);font-size:9rem">🏙️</div>
+    <div class="text-3d" style="top:55%;left:50%;transform:translate(-50%,-50%) translateZ(50px)">JOM LAWAT<br>BANDAR!</div>
+    <div class="sub-title">Bandar moden dan sibuk!</div>
+  </div>
+
+  <!-- Scene 2: Bangunan Tinggi 8-18s -->
+  <div class="scene" id="s2">
+    <div class="obj-3d" style="top:10%;left:15%;font-size:8rem">🏢</div>
+    <div class="obj-3d" style="top:5%;left:50%;transform:translateX(-50%);font-size:10rem">🏬</div>
+    <div class="obj-3d" style="top:15%;right:15%;font-size:7rem">🏥</div>
+    <div class="obj-3d" style="top:65%;left:25%">🏫</div>
+    <div class="text-3d" style="top:50%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:2.8rem;color:#3b82f6">BANGUNAN</div>
+    <div class="sub-title">Pejabat, Pasaraya, Hospital, Sekolah</div>
+  </div>
+
+  <!-- Scene 3: Kenderaan 18-28s -->
+  <div class="scene" id="s3">
+    <div class="obj-3d gerak" style="top:40%;left:0;font-size:5rem">🚗</div>
+    <div class="obj-3d gerak" style="top:55%;left:0;font-size:6rem;animation-delay:1s">🚌</div>
+    <div class="obj-3d gerak" style="top:70%;left:0;font-size:5rem;animation-delay:2s">🚆</div>
+    <div class="obj-3d" style="top:15%;right:20%">🚦</div>
+    <div class="text-3d" style="top:25%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:2.8rem;color:#FFD700">KENDERAAN</div>
+    <div class="sub-title">Kereta, Bas, LRT, Lampu Isyarat</div>
+  </div>
+
+  <!-- Scene 4: Tempat Awam 28-38s -->
+  <div class="scene" id="s4">
+    <div class="obj-3d" style="top:20%;left:20%">🏦</div>
+    <div class="obj-3d" style="top:20%;right:20%">🏪</div>
+    <div class="obj-3d" style="top:65%;left:15%">🏛️</div>
+    <div class="obj-3d" style="top:65%;right:15%">⛽</div>
+    <div class="text-3d" style="top:50%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:2.5rem;color:#20c997">TEMPAT AWAM</div>
+    <div class="sub-title">Bank, Kedai, Perpustakaan, Stesen Minyak</div>
+  </div>
+
+  <!-- Scene 5: Kemudahan 38-48s -->
+  <div class="scene" id="s5">
+    <div class="obj-3d" style="top:20%;left:25%">🚰</div>
+    <div class="obj-3d" style="top:20%;right:25%">💡</div>
+    <div class="obj-3d" style="top:65%;left:20%">📶</div>
+    <div class="obj-3d" style="top:65%;right:20%">🗑️</div>
+    <div class="text-3d" style="top:50%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:2.5rem;color:#a855f7">KEMUDAHAN</div>
+    <div class="sub-title">Air paip, Elektrik, Internet, Tong sampah</div>
+  </div>
+
+  <!-- Scene 6: Orang Bandar 48-58s -->
+  <div class="scene" id="s6">
+    <div class="obj-3d" style="top:30%;left:50%;transform:translateX(-50%);font-size:8rem">👨‍💼</div>
+    <div class="obj-3d" style="top:65%;left:25%">👩‍⚕️</div>
+    <div class="obj-3d" style="top:65%;right:25%">👮‍♂️</div>
+    <div class="text-3d" style="top:50%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:2.5rem;color:#f59e0b">PEKERJAAN</div>
+    <div class="sub-title">Pegawai, Doktor, Polis, Cikgu</div>
+  </div>
+
+  <!-- Scene 7: Bunyi Bandar 58-70s -->
+  <div class="scene" id="s7">
+    <div class="obj-3d kelip" style="top:25%;left:50%;transform:translateX(-50%);font-size:8rem">🎵</div>
+    <div class="text-3d" style="top:55%;left:50%;transform:translate(-50%,-50%) translateZ(50px);font-size:2.3rem">DENGAR BUNYI BANDAR</div>
+    <div class="sub-title">Hon kereta, Laungan azan, Orang bercakap</div>
+  </div>
+
+  <!-- Scene 8: Outro 70-80s -->
+  <div class="scene" id="s8">
+    <div class="obj-3d" style="top:50%;left:50%;transform:translate(-50%,-50%);font-size:11rem">🌆</div>
+    <div class="text-3d" style="top:20%;left:50%;transform:translateX(-50%) translateZ(50px);font-size:2.8rem">SAYANGI BANDAR KITA!</div>
+    <div class="sub-title">Jaga kebersihan. Patuh undang-undang. Hidup harmoni 💙</div>
+  </div>
+
+  <div class="kredit">Vinothan S.Ramayah - SMK BUD2</div>
+</div>
+
+<script>
+let scene = 0;
+const scenes = ['s1','s2','s3','s4','s5','s6','s7','s8'];
+const durasi = [8000,10000,10000,10000,10000,10000,12000,10000]; // 80s total
+const teks = [
+  "Selamat datang ke bandar! Bandar ialah tempat yang moden, sibuk, dan penuh dengan bangunan tinggi.",
+  "Tengok bangunan dalam bandar. Ada pejabat yang tinggi. Pasaraya yang besar. Hospital untuk orang sakit. Dan sekolah untuk belajar.",
+  "Di jalan bandar ada banyak kenderaan. Kereta, bas, dan LRT. Kita mesti ikut lampu isyarat. Merah berhenti, hijau jalan!",
+  "Bandar ada banyak tempat awam. Bank untuk simpan duit. Kedai untuk beli barang. Perpustakaan untuk baca buku. Stesen minyak untuk isi petrol.",
+  "Bandar ada kemudahan lengkap. Air paip yang bersih. Elektrik untuk lampu. Internet untuk belajar. Tong sampah untuk buang sampah.",
+  "Di bandar ramai orang bekerja. Ada pegawai di pejabat. Doktor di hospital. Polis jaga keselamatan. Dan cikgu mengajar di sekolah.",
+  "Pejam mata. Dengar bunyi bandar. Bunyi hon kereta. Laungan azan dari masjid. Orang bercakap dan berniaga.",
+  "Bandar ialah rumah kita. Kita mesti jaga kebersihan bandar. Patuh undang-undang. Hidup harmoni dengan jiran. Sayangi bandar kita!"
+];
+
+function cakap(teks){
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    let u = new SpeechSynthesisUtterance(teks);
+    u.lang = 'ms-MY';
+    u.rate = 0.9;
+    u.pitch = 1.1;
+    speechSynthesis.speak(u);
+  }
+}
+
+function mula(){
+  document.getElementById('startBtn').style.display='none';
+  nextScene();
+}
+
+function nextScene(){
+  if(scene > 0) document.getElementById(scenes[scene-1]).classList.remove('active');
+  if(scene >= scenes.length){
+    document.getElementById('startBtn').style.display='block';
+    document.getElementById('startBtn').innerText='🔄 LAWAT LAGI';
+    scene = 0;
+    return;
+  }
+
+  document.getElementById(scenes[scene]).classList.add('active');
+  cakap(teks[scene]);
+  document.getElementById('timer').style.width = ((scene+1)/scenes.length)*100+'%';
+  setTimeout(()=>{scene++;nextScene()}, durasi[scene]);
+}
+</script>
+</body>
+</html>
